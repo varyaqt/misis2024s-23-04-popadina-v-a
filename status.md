@@ -1,5 +1,5 @@
-CHECK: 20240212-071723
-OK: file codeforces.id is correct
+CHECK: 20240212-174823
+ERROR: codeforces id is wrong
 OK: folder prj.codeforces structure is correct
 ERROR: file prj.codeforces/CMakeLists.txt is absent
 OK: CMake generator successed
