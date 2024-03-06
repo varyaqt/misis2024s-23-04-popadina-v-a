@@ -1,5 +1,5 @@
-#ifndef COMPLEX_COMPLEX
-#define COMPLEX_COMPLEX
+#ifndef COMPLEX_HPP
+#define COMPLEX_HPP
 
 #include <iosfwd>
 
