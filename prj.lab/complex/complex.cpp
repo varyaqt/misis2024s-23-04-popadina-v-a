@@ -1,38 +1,89 @@
 #include "complex/complex.hpp"
 
-void test() {
-	Complex c1(0, 0);
-	Complex c2(0, 0);
-	double real = 0;
-	std::cout << "Input a real-type number: ";
-	std::cin >> real;
-	std::cout << "Input complex num 1: ";
-	std::cin >> c1;
-	std::cout << "Input complex num 2: ";
-	std::cin >> c2;
-	std::cout << "test 1.1: addition" << std::endl;
-	std::cout << c1 << "+" << c2 << "=" << c1 + c2 << std::endl;
-	std::cout << c1 << "+" << real << "=" << c1 + real << std::endl;
-	std::cout << real << "+" << c2 << "=" << real + c2 << std::endl;
+Complex::Complex(const double real)
+	: Complex(real, 0.0)
+{
+}
 
-	std::cout << "test 1.2: substraction" << std::endl;
-	std::cout << c1 << "-" << c2 << "=" << c1 - c2 << std::endl;
-	std::cout << c1 << "-" << real << "=" << c1 - real << std::endl;
-	std::cout << real << "-" << c2 << "=" << real - c2 << std::endl;
+Complex::Complex(const double real, const double imaginary)
+	: re(real)
+	, im(imaginary)
+{
+}
 
-	std::cout << "test 1.3: multiplication" << std::endl;
-	std::cout << c1 << "*" << c2 << "=" << c1 * c2 << std::endl;
-	std::cout << c1 << "*" << real << "=" << c1 * real << std::endl;
-	std::cout << real << "*" << c2 << "=" << real * c2 << std::endl;
+//addition
+Complex& Complex::operator+=(const Complex& rhs) {
+	re += rhs.re;
+	im += rhs.im;
+	return *this;
+}
+Complex operator+(const Complex& lhs, const Complex& rhs) noexcept { return Complex(lhs) += rhs; }
+Complex operator+(const Complex& lhs, const double rhs) noexcept { return Complex(lhs) += rhs; }
+Complex operator+(const double lhs, const Complex& rhs) noexcept { return Complex(lhs) += rhs; }
 
+//subtraction
+Complex& Complex::operator-=(const Complex& rhs) {
+	re -= rhs.re;
+	im -= rhs.im;
+	return *this;
+}
+Complex operator-(const Complex& lhs, const Complex& rhs) noexcept { return Complex(lhs) -= rhs; }
+Complex operator-(const Complex& lhs, const double rhs) noexcept { return Complex(lhs) -= rhs; }
+Complex operator-(const double lhs, const Complex& rhs) noexcept { return Complex(lhs) -= rhs; }
 
-	std::cout << "CONJUGATE TO THE" << c1 << ": " << conjugate(c1) << std::endl;
-	std::cout << "CONJUGATE TO THE" << c2 << ": " << conjugate(c2) << std::endl;
+//multiplication
+Complex& Complex::operator*=(const Complex& rhs) {
+	double temp = re * rhs.re - im * rhs.im;
+	im = re * rhs.im + im * rhs.re;
+	re = temp;
+	return *this;
+}
+Complex operator*(const Complex& lhs, const Complex& rhs) noexcept { return Complex(lhs) *= rhs; }
+Complex operator*(const Complex& lhs, const double rhs) noexcept { return Complex(lhs) *= rhs; }
+Complex operator*(const double lhs, const Complex& rhs) noexcept { return Complex(lhs) *= rhs; }
 
-	std::cout << c1 << " == " << c2 << ": " static_cast<bool>(c1 == c2) << std::endl;
-	std::cout << c1 << " != " << c2 << ": " static_cast<bool>(c1 != c2) << std::endl;
+//division
+Complex& Complex::operator/=(const Complex& rhs) {
+	double temp = (re * rhs.re + im * rhs.im) / (rhs.re * rhs.re + rhs.im * rhs.im);
+	im = (rhs.re * im - re * rhs.im) / (rhs.re * rhs.re + rhs.im * rhs.im);
+	re = temp;
+	return *this;
+}
+Complex operator/(const Complex& lhs, const Complex& rhs) { return Complex(lhs) /= rhs; }
+Complex operator/(const Complex& lhs, const double rhs) { return Complex(lhs) /= rhs; }
+Complex operator/(const double lhs, const Complex& rhs) { return Complex(lhs) /= rhs; }
 
-int main() {
-	test();
-	return 0;
+//conjugate
+Complex conjugate(Complex& c) {
+	Complex cc(c.re, -1 * c.im);
+	return cc;
+}
+
+std::ostream& Complex::WriteTo(std::ostream& ostrm) const
+{
+	ostrm << leftBrace << re << separator << im << rightBrace;
+	return ostrm;
+}
+
+std::istream& Complex::ReadFrom(std::istream& istrm)
+{
+	char leftBrace(0);
+	double real(0.0);
+	char comma(0);
+	double imaganary(0.0);
+	char rightBrace(0);
+
+	istrm >> leftBrace >> real >> comma >> imaganary >> rightBrace;
+
+	if (istrm.good()) {
+		if ((Complex::leftBrace == leftBrace) && (Complex::separator == comma)
+			&& (Complex::rightBrace == rightBrace)) {
+			re = real;
+			im = imaganary;
+		}
+		else {
+			istrm.setstate(std::ios_base::failbit);
+		}
+	}
+	return istrm;
 }
