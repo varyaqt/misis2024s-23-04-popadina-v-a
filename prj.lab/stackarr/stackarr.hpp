@@ -14,11 +14,11 @@ public:
     [[nodiscard]] StackArr(const StackArr& obj) = default;
     ~StackArr() = default;
     [[nodiscard]] StackArr& operator=(const StackArr& rhs) noexcept;
-    bool isEmpty() const noexcept;
-    void push(const Complex& s);
-    void pop() noexcept;
+    bool IsEmpty() const noexcept;
+    void Push(const Complex& s);
+    void Pop() noexcept;
     [[nodiscard]] const Complex& top() const;
-    void clear() noexcept;
+    void Clear() noexcept;
 private:
     std::ptrdiff_t size_ = 0; //!< число элементов в буфере
     std::ptrdiff_t i_top_ = -1; //!< индекс top элемента
