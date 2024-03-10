@@ -13,12 +13,11 @@ public:
     QueueArr() = default;
     QueueArr(const QueueArr& obj) = default;
     ~QueueArr() = default;
-    QueueArr& operator=(const QueueArr& obj) noexcept;
-    [[nodiscard]] bool IsEmpty() const noexcept;
+    QueueArr& operator=(const QueueArr& obj);
+    [[nodiscard]] bool IsEmpty() noexcept;
     void Pop() noexcept;
     void Push(const Complex& obj);
     [[nodiscard]] Complex& Top();
-    [[nodiscard]] const Complex& Top() const;
     void Clear() noexcept;
 private:
     struct Node {
@@ -29,4 +28,6 @@ private:
     Node* tail_ = nullptr;
     Complex* data_ = nullptr;
     std::ptrdiff_t size_ = 0;
+    std::ptrdiff_t capacity_ = 0;
+    std::ptrdiff_t i_top_ = -1; //!< индекс top элемента
 };
