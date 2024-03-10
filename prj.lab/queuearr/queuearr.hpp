@@ -1,6 +1,6 @@
 #pragma once
-#ifndef STACKARR_HPP
-#define STACKARR_HPP
+#ifndef QUEUEARR_HPP
+#define QUEUEARR_HPP
 
 #include <cstddef>
 
