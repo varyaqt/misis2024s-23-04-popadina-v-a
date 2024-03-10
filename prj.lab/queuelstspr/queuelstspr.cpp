@@ -42,9 +42,7 @@ void Pop() {
 	}
 }
 
-
-
-void QueueLstSPr::Push(const double& val) {
+void Push(const double& val) {
 	if (IsEmpty()) {
 		tail_ = new Node{ val };
 		head_ = tail_;
