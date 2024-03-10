@@ -31,3 +31,4 @@ private:
     std::ptrdiff_t capacity_ = 0;
     std::ptrdiff_t i_top_ = -1; //!< индекс top элемента
 };
+#endif
