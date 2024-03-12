@@ -2,14 +2,15 @@
 #ifndef QUEUELST_QUEUELST
 #define QUEUELST_QUEUELST
 
-#include <complex/complex.hpp>
+#include "complex/complex.hpp"
 
 #include <cstddef>
 
 class QueueLst {
 public:
     QueueLst() = default;
-    QueueLst(const QueueLst&) = default;
+    QueueLst(const QueueLst& obj) = default;
+    QueueLst(QueueLst&& obj) noexcept;
     ~QueueLst() = default;
     [[nodiscard]] QueueLst& operator=(const QueueLst&) = default;
     [[nodiscard]] bool IsEmpty() const noexcept;
