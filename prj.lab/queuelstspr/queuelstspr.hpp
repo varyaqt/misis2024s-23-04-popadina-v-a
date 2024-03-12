@@ -22,6 +22,5 @@ private:
 	};
 	Node* head_ = nullptr;   //!< 
 	Node* tail_ = nullptr;   //!< 
-	data_ = [];
 };
 #endif
