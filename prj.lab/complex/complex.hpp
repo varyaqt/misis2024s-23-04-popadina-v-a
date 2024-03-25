@@ -71,8 +71,11 @@ struct Complex {
 [[nodiscard]] Complex operator/(const double lhs, const Complex& rhs);
 
 
-void test(const Complex& c1, const Complex& c2, const double c);
+[[nodiscard]] Complex pow(const Complex& lhs, int n);
 
+[[nodiscard]] double abs(const Complex& rhs) noexcept;
+
+void test(const Complex& c1, const Complex& c2, const double c);
 bool testParse(const std::string& str);
 
 inline std::ostream& operator<<(std::ostream& ostrm, const Complex& rhs) noexcept {
