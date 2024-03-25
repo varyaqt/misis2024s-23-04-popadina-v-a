@@ -1,10 +1,16 @@
-#include "dynarr.hpp"
+#include "dynarr/dynarr.hpp"
 
 DynArr::DynArr(const DynArr& d) {
     size_ = d.size_;
     capacity_ = d.capacity_;
     data_ = new float[size_];
     std::copy(d.data_, d.data_ + d.size_, data_);
+}
+
+DynArr::DynArr(DynArr&& src) noexcept {
+    std::swap(capacity_, src.capacity_);
+    std::swap(size_, src.size_);
+    std::swap(data_, src.data_);
 }
 
 DynArr::DynArr(const std::ptrdiff_t size){
@@ -27,13 +33,24 @@ std::ptrdiff_t DynArr::size() const noexcept{
 }
 
 DynArr& DynArr::operator=(const DynArr& d) noexcept {
-    if (d.size_ > capacity_) {
-        capacity_ = d.capacity_;
-        delete[] data_;
-        data_ = new float[d.size_];
+    if (this != &d) {
+        if (d.size_ > capacity_) {
+            capacity_ = d.capacity_;
+            delete[] data_;
+            data_ = new float[d.size_];
+        }
+        std::copy(d.data_, d.data_ + d.size_, data_);
+        size_ = d.size_;
+        return *this;
     }
-    std::copy(d.data_, d.data_ + d.size_, data_);
-    size_ = d.size_;
+}
+
+DynArr& DynArr::DynArr::operator=(DynArr&& src) noexcept {
+    if (this != &src) {
+        std::swap(capacity_, src.capacity_);
+        std::swap(size_, src.size_);
+        std::swap(data_, src.data_);
+    }
     return *this;
 }
 
