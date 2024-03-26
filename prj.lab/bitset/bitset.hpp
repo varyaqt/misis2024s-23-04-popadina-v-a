@@ -2,10 +2,11 @@
 #ifndef BITSET_HPP
 #define BITSET_HPP
 
-#include <algorithm>
+#include <iostream>
 #include <cstdint>
-#include <iosfwd>
 #include <vector>
+#include <algorithm>
+#include <stdexcept>
 
 class BitSet {
 public:
