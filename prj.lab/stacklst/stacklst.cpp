@@ -1,54 +1,113 @@
-#include "complex/complex.hpp"
-#include "stacklst/stacklst.hpp"
+#include "stacklst.hpp"
 
-#include <algorithm>
-#include <stdexcept>
-
-bool StackLst::IsEmpty() noexcept {
-    return (head_ == nullptr);
+void StackLst::Push(const Complex& c) {
+    Node* newNode = new Node(c);
+    newNode->next = head_;
+    head_ = newNode;
 }
 
 void StackLst::Pop() noexcept {
     if (head_ != nullptr) {
-        Node* copy = head_;
-        delete head_;
-        head_ = copy->next;
-    }
-}
-void StackLst::Clear() noexcept {
-    while (!IsEmpty()) {
-        Pop();
+        Node* delete_future = head_;
+        head_ = head_->next;
+        delete delete_future;
     }
 }
 
-StackLst::~StackLst() {
-    Clear();
+bool StackLst::IsEmpty() const noexcept {
+    return (head_ == nullptr) ? 1 : 0;
 }
 
-void StackLst::Push(const Complex& s) {
-    Node* copy = *head_;
-    head_ = new Node();
-    head_->next = copy;
+Complex& StackLst::Top() {
+    if (head_ == nullptr) {
+        throw std::logic_error("Stack is empty!\n");
+    }
+    else {
+        return head_->v;
+    }
 }
 
 const Complex& StackLst::Top() const {
-    if (IsEmpty()) {
-        throw::std::logic_error("List is empty");
+    if (head_ == nullptr) {
+        throw std::logic_error("Stack is empty!\n");
     }
     else {
-        return head_->val;
+        return head_->v;
     }
 }
 
-StackLst& StackLst::operator=(const StackLst& s) noexcept {
-    Clear(); 
-    Node* go_back_s = s.head_;
-    head_ = new Node(go_back_s->val);
-    Node* go_back = head_;
-    while (go_bacl_s->next != nullptr) {
-        go_back_s = go_back_s->next;
-        go_back->next = new Node(go_back_s->val);
-        go_back = go_back->next;
+void StackLst::Clear() noexcept {
+    while (head_ != nullptr) {
+        Node* delete_future = head_;
+        head_ = head_->next;
+        delete delete_future;
+    }
+}
+
+StackLst::StackLst(const StackLst& rhs) {
+    if (rhs.head_ != nullptr) {
+        Node* newNode = new Node(rhs.head_->v);
+        head_ = newNode;
+        Node* vs = rhs.head_->next;
+        Node* pr = newNode;
+        while (vs != nullptr) {
+            Node* newNode = new Node(vs->v);
+            pr->next = newNode;
+            vs = vs->next;
+            pr = newNode;
+        }
+    }
+}
+
+StackLst::StackLst(StackLst&& rhs) noexcept{
+    std::swap(head_, rhs.head_);
+}
+
+StackLst::~StackLst() {
+    while (head_ != nullptr) {
+        Node* delete_future = head_;
+        head_ = head_->next;
+        delete delete_future;
+    }
+}
+
+StackLst& StackLst::operator=(StackLst&& rhs) noexcept {
+    if (this != &rhs) {
+        std::swap(head_, rhs.head_);
+    }
+    return *this;
+}
+
+StackLst& StackLst::operator=(const StackLst& rhs) noexcept {
+    if (this != &rhs) {
+        Node* vs = rhs.head_;
+        Node* tvs = head_;
+        Node* pr;
+        while (vs != nullptr) {
+            if (tvs != nullptr) {
+                tvs->v = vs->v;
+            }
+            else {
+                Node* newNode = new Node(vs->v);
+                if (tvs != head_) {
+                    pr->next = newNode;
+                    tvs = newNode;
+                }
+                else {
+                    head_ = newNode;
+                    tvs = newNode;
+                }
+            }
+            pr = tvs;
+            vs = vs->next;
+            tvs = tvs->next;
+        }
+        while (tvs != nullptr) {
+            Node* delete_future = tvs;
+            tvs = tvs->next;
+            delete delete_future;
+        }
+        pr->next = nullptr;
     }
     return *this;
 }
