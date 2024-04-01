@@ -2,30 +2,35 @@
 #ifndef STACKLST_HPP
 #define STACKLST_HPP
 
+#include <iostream>
+#include <algorithm>
 #include <cstddef>
-
 #include "complex/complex.hpp"
-
-class Complex;
 
 class StackLst {
 public:
     [[nodiscard]] StackLst() = default;
-    [[nodiscard]] StackLst(const StackLst& s) = default;
-    ~StackLst() = default;
-    [[nodiscard]] StackLst& operator=(const StackLst& s) noexcept;
-    bool IsEmpty() noexcept;
-    void Push(const Complex& num);
+    [[nodiscard]] StackLst(const StackLst& rhs);
+    [[nodiscard]] StackLst(StackLst&& rhs) noexcept;
+    ~StackLst();
+
+    [[nodiscard]] StackLst& operator=(const StackLst& rhs) noexcept;
+    [[nodiscard]] StackLst& operator=(StackLst&& rhs) noexcept;
+    void Push(const Complex& c);
     void Pop() noexcept;
+    bool IsEmpty() const noexcept;
+    [[nodiscard]] Complex& Top();
     [[nodiscard]] const Complex& Top() const;
     void Clear() noexcept;
+
 private:
     struct Node {
-        Complex val;
-        Node* next;
-        Node(const Complex& data) : val(data), next(nullptr) {}
+        Complex v;
+        Node* next = nullptr;
+        Node(const Complex& val) : v(val) {}
         ~Node() = default;
     };
     Node* head_ = nullptr;
 };
+
 #endif
