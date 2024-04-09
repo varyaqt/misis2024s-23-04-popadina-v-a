@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(popadina-v-a-23-04)
+project(polevoi-d-v-23-00)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "cmake")
@@ -16,6 +16,8 @@ option(BUILD_WITH_SAMPLES    "Build prj.cw sample targets"  off )
 if (BUILD_WITH_CODEFORCES)
   add_subdirectory(prj.codeforces)
 endif()
+
+enable_testing()
 
 add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
