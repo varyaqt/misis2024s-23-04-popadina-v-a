@@ -1,0 +1,15 @@
+CMake Error at prj.lab/stackarrt/CMakeLists.txt:2 (set_property):
+  set_property could not find TARGET stacklstt.  Perhaps it has not yet been
+  created.
+
+
+CMake Error at prj.lab/stackarrt/CMakeLists.txt:3 (target_include_directories):
+  Cannot specify include directories for target "stacklstt" which is not
+  built by this project.
+
+
+CMake Error at prj.test/CMakeLists.txt:22 (target_link_libraries):
+  Cannot specify link libraries for target "test_stacklstt" which is not
+  built by this project.
+
+
