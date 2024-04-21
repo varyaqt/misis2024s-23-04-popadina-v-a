@@ -3,6 +3,10 @@
 #define COMPLEX_HPP
 
 #include <iosfwd>
+#include <iostream>
+#include <cstdint>
+#include <algorithm>
+#include <stdexcept>
 
 struct Complex {
 	Complex() {}
