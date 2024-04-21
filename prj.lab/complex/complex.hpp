@@ -79,7 +79,7 @@ struct Complex {
 
 [[nodiscard]] double abs(const Complex& rhs) noexcept;
 
-void test(const Complex& c1, const Complex& c2, const double c);
+void test(const Complex& c1, const Complex& c2, const double c) {};
 bool testParse(const std::string& str);
 
 inline std::ostream& operator<<(std::ostream& ostrm, const Complex& rhs) noexcept {
