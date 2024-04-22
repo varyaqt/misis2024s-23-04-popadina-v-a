@@ -1,6 +1,6 @@
 #pragma once
-#ifndef QUEUELST_QUEUELST
-#define QUEUELST_QUEUELST
+#ifndef QUEUELST_HPP
+#define QUEUELST_HPP
 
 #include "complex/complex.hpp"
 
