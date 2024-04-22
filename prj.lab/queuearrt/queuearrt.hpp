@@ -1,6 +1,6 @@
 #pragma once
-#ifndef QueueArrT_HPP
-#define QueueArrT_HPP
+#ifndef QUEUEARRT_HPP
+#define QUEUEARRT_HPP
 
 #include <iostream>
 #include <memory>
