@@ -12,7 +12,7 @@ class Complex;
 
 class StackArr {
 public:
-    [[nodiscard]] StackArr();
+    [[nodiscard]] StackArr() = default;
     [[nodiscard]] StackArr(const StackArr& rhs);
     [[nodiscard]] StackArr(StackArr&& rhs) noexcept;
     ~StackArr() = default;
