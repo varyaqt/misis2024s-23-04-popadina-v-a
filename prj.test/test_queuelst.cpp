@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include "doctest.h"
-#include <queuelst/queuelst.hpp>
+#include "queuelst/queuelst.hpp"
 
 TEST_CASE("queuelst ctor") {
     Complex c1(2, 0);
