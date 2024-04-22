@@ -2,33 +2,34 @@
 #ifndef QUEUEARR_HPP
 #define QUEUEARR_HPP
 
+#include <iostream>
+#include <memory>
+#include <algorithm>
 #include <cstddef>
-
 #include "complex/complex.hpp"
-
-class Complex;
 
 class QueueArr {
 public:
-    QueueArr() = default;
-    QueueArr(const QueueArr& obj) = default;
+    [[nodiscard]] QueueArr() = default;
+    [[nodiscard]] QueueArr(const QueueArr& rhs);
     ~QueueArr() = default;
-    QueueArr& operator=(const QueueArr& obj);
-    [[nodiscard]] bool IsEmpty() noexcept;
+    [[nodiscard]] QueueArr& operator=(const QueueArr& rhs);
+    [[nodiscard]] QueueArr& operator=(QueueArr&& d) noexcept;
+    [[nodiscard]] QueueArr(QueueArr&& d) noexcept;
+
+    void Push(const Complex& c);
     void Pop() noexcept;
-    void Push(const Complex& obj);
-    [[nodiscard]] Complex& Top();
     void Clear() noexcept;
+    [[nodiscard]] Complex& Top();
+    [[nodiscard]] const Complex& Top() const;
+    bool IsEmpty() const noexcept;
+    std::ptrdiff_t Count() const;
+
 private:
-    struct Node {
-        Complex obj;
-        Node* next = nullptr;
-    };
-    Node* head_ = nullptr;
-    Node* tail_ = nullptr;
-    Complex* data_ = nullptr;
-    std::ptrdiff_t size_ = 0;
     std::ptrdiff_t capacity_ = 0;
-    std::ptrdiff_t i_top_ = -1; //!< индекс top элемента
+    std::ptrdiff_t head_ = -1;
+    std::ptrdiff_t tail_ = -1;
+    std::unique_ptr<Complex[]> data_ = std::make_unique<Complex[]>(capacity_);
 };
+
 #endif
