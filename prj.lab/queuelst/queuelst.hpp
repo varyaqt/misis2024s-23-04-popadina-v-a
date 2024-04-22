@@ -11,7 +11,7 @@ public:
     QueueLst() = default;
     QueueLst(const QueueLst& obj) = default;
     QueueLst(QueueLst&& obj) noexcept;
-    QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept;
+    QueueLst& operator=(QueueLst&& rhs) noexcept;
     ~QueueLst() = default;
     [[nodiscard]] QueueLst& operator=(const QueueLst&) = default;
     [[nodiscard]] bool IsEmpty() const noexcept;
