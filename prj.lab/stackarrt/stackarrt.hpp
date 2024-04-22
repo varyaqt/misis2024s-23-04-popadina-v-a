@@ -57,7 +57,7 @@ StackArrT<T>& StackArrT<T>::operator=(const StackArrT<T>& rhs) noexcept {
 }
 
 template<class T>
-StackArrT<T>& StackArrT<T>::operator=(StackArr<T>&& rhs) noexcept {
+StackArrT<T>& StackArrT<T>::operator=(StackArrT&& rhs) noexcept {
     if (this != &rhs) {
         std::swap(data_, rhs.data_);
         std::swap(size_, rhs.size_);
