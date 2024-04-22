@@ -2,25 +2,33 @@
 #ifndef QUEUELSTPR_HPP
 #define QUEUELSTPR_HPP
 
+#include <iostream>
 #include <cstddef>
 
 class QueueLstPr {
 public:
-	QueueLstPr() = default;
-	~QueueLstPr() = default;
-	QueueLstPr(const QueueLstPr& obj) = default;
-	QueueLstPr& operator=(const QueueLstPr& obj);
-	[[nodisccard]] bool IsEmpty() noexcept;
-	double Top();
-	void Push(const double& obj);
-	void Pop();
-	void Clear() noexcept;
+    [[nodiscard]] QueueLstPr() = default;
+    ~QueueLstPr();
+    [[nodiscard]] QueueLstPr(const QueueLstPr& rhs);
+    [[nodiscard]] QueueLstPr(QueueLstPr&& rhs) noexcept;
+    [[nodiscard]] QueueLstPr& operator=(const QueueLstPr& rhs);
+    [[nodiscard]] QueueLstPr& operator=(QueueLstPr&& rhs) noexcept;
+
+    void Push(const float& f);
+    void Pop() noexcept;
+    void Clear() noexcept;
+    bool IsEmpty() const noexcept;
+    [[nodiscard]] float& Top();
+    [[nodiscard]] const float& Top() const;
+
 private:
-	struct Node {
-		double val;
-		Node* next = noexcept;
-	};
-	Node* head_ = nullptr;   //!< 
-	Node* tail_ = nullptr;   //!< 
+    struct Node {
+        float f;
+        Node* next = nullptr;
+        Node(const float& item) : f(item) {}
+        ~Node() = default;
+    };
+    Node* head_ = nullptr;
 };
+
 #endif
