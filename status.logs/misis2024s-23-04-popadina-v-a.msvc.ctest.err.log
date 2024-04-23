@@ -1,1 +1,6 @@
-No tests were found!!!
+Unable to find executable: D:/projects/misis2023f-23-check/misis2024s-23-04-popadina-v-a/bin.check/doctest_bitset.exe
+Unable to find executable: D:/projects/misis2023f-23-check/misis2024s-23-04-popadina-v-a/bin.check/doctest_stacklst.exe
+Unable to find executable: D:/projects/misis2023f-23-check/misis2024s-23-04-popadina-v-a/bin.check/doctest_stacklst_m.exe
+Errors while running CTest
+Output from these tests are in: D:/projects/misis2023f-23-check/misis2024s-23-04-popadina-v-a/build.check/Testing/Temporary/LastTest.log
+Use "--rerun-failed --output-on-failure" to re-run the failed cases verbosely.
