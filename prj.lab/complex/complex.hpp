@@ -9,7 +9,6 @@
 #include <stdexcept>
 
 struct Complex {
-	Complex() {}
 	[[nodiscard]] Complex() = default;
 	[[nodiscard]] Complex(const Complex&) = default;
 	[[nodiscard]]  Complex(Complex&&) = default;
@@ -18,13 +17,12 @@ struct Complex {
 	[[nodiscard]] Complex(const double real, const double imaginary) : re(real), im(imaginary) {}
 	Complex& operator=(const Complex&) = default;
 	Complex& operator=(Complex&&) = default;
-	[[nodiscard]] bool operator==(const Complex& rhs) const { return (re == rhs.re) && (im == rhs.im); }
+	[[nodiscard]] bool operator==(const Complex& rhs) const noexcept;
+	//[[nodiscard]] bool operator==(const Complex& rhs) const { return (re == rhs.re) && (im == rhs.im); }
 	[[nodiscard]] bool operator==(const double rhs) const { return operator==(Complex(rhs)); }
 	[[nodiscard]] bool operator!=(const Complex& rhs) const { return !operator==(rhs); }
 	[[nodiscard]] bool operator!=(const double rhs) const { return operator!=(Complex(rhs)); }
 
-	Complex& operator=(const Complex& rhs) = default;
-	Complex& operator=(Complex&&) = default;
 	Complex& operator+=(const Complex& rhs) noexcept;
 	Complex& operator+=(const double rhs) noexcept {
 		return operator+=(Complex(rhs));
