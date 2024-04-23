@@ -19,8 +19,8 @@ public:
     [[nodiscard]] bool IsEmpty() const noexcept;
     void Pop() noexcept;
     void Push(const T& val);
-    [[nodiscard]] T& Top()&;
-    [[nodiscard]] const T& Top() const&;
+    [[nodiscard]] T& Top();
+    [[nodiscard]] const T& Top() const;
     void Clear() noexcept;
 private:
     std::ptrdiff_t size_ = 0; //!< число элементов в буфереш
