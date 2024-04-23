@@ -124,7 +124,7 @@ StackLstT<T>& StackLstT<T>::operator=(const StackLstT& rhs) noexcept {
     if (this != &rhs) {
         Node* vs = rhs.head_;
         Node* tvs = head_;
-        Node* pr;
+        Node* pr = nullptr;
         while (vs != nullptr) {
             if (tvs != nullptr) {
                 tvs->v = vs->v;
@@ -149,7 +149,7 @@ StackLstT<T>& StackLstT<T>::operator=(const StackLstT& rhs) noexcept {
             tvs = tvs->next;
             delete delete_future;
         }
-        pr->next = nullptr;
+        if (pr != nullptr) pr->next = nullptr;
     }
     return *this;
 }
