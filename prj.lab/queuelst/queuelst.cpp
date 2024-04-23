@@ -50,14 +50,14 @@ Complex& QueueLst::Top() {
     if (IsEmpty()) {
         throw std::logic_error("QueueLst - try get top from empty queue.");
     }
-    return head_->val;
+    return head_->v;
 }
 
 const Complex& QueueLst::Top() const {
     if (IsEmpty()) {
         throw std::logic_error("QueueLst - try get top form empty queue.");
     }
-    return head_->val;
+    return head_->v;
 }
 
 void QueueLst::Clear() noexcept {
@@ -70,7 +70,7 @@ QueueLst& QueueLst::operator=(const QueueLst& rhs) {
     if (this != &rhs) {
         Node* vs = rhs.head_;
         Node* tvs = head_;
-        Node* pr;
+        Node* pr = nullptr;
         while (vs != nullptr) {
             if (tvs != nullptr) {
                 tvs->v = vs->v;
