@@ -97,7 +97,7 @@ QueueLst& QueueLst::operator=(const QueueLst& rhs) {
             delete delete_future;
         }
         tail_ = pr;
-        tail_->next = nullptr;
+        if (tail_ != nullptr) tail_->next = nullptr;
     }
     return *this;
 }
