@@ -13,7 +13,7 @@ public:
     QueueLst(QueueLst&& obj) noexcept;
     QueueLst& operator=(QueueLst&& rhs) noexcept;
     ~QueueLst() = default;
-    [[nodiscard]] QueueLst& operator=(const QueueLst&) = default;
+    [[nodiscard]] QueueLst& operator=(const QueueLst&);
     [[nodiscard]] bool IsEmpty() const noexcept;
     void Pop() noexcept;
     void Push(const Complex& val);
@@ -22,8 +22,10 @@ public:
     void Clear() noexcept;
 private:
     struct Node {
-        Complex val;
+        Complex v;
         Node* next = nullptr;
+        Node(const Complex& val) : v(val) {}
+        ~Node() = default;
     };
     Node* head_ = nullptr;   //!< 
     Node* tail_ = nullptr;   //!< 
