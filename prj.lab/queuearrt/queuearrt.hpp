@@ -37,7 +37,7 @@ private:
 template<class T>
 QueueArrT<T>::QueueArrT(const QueueArrT& rhs) {
     if (rhs.head_ != -1) {
-        data_ = std::make_unique<Complex[]>(rhs.capacity_);
+        data_ = std::make_unique<T[]>(rhs.capacity_);
         capacity_ = rhs.capacity_;
         head_ = 0;
         if (rhs.tail_ > rhs.head_) {
@@ -75,7 +75,7 @@ template<class T>
 QueueArrT<T>& QueueArrT<T>::operator=(const QueueArrT& rhs) {
     if (this != &rhs) {
         if (capacity_ < rhs.capacity_) {
-            data_ = std::make_unique<Complex[]>(rhs.capacity_);
+            data_ = std::make_unique<T[]>(rhs.capacity_);
             capacity_ = rhs.capacity_;
         }
         head_ = 0;
@@ -96,13 +96,13 @@ template<class T>
 void QueueArrT<T>::Push(const T& c) {
     if (head_ == -1) {
         capacity_ = 8;
-        data_ = std::make_unique<Complex[]>(capacity_);
+        data_ = std::make_unique<T[]>(capacity_);
         head_ = 0;
         tail_ = 0;
     }
     data_[tail_] = c;
     if (head_ == (tail_ + 1) % capacity_) {
-        std::unique_ptr<Complex[]> newData = std::make_unique<Complex[]>(capacity_ * 2);
+        std::unique_ptr<T[]> newData = std::make_unique<T[]>(capacity_ * 2);
         std::copy(data_.get() + head_, data_.get() + capacity_, newData.get());
         if (tail_ < head_) {
             std::copy(data_.get(), data_.get() + tail_, newData.get() + (capacity_ - head_));
