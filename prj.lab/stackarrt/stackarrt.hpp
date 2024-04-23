@@ -32,7 +32,7 @@ template<class T>
 StackArrT<T>::StackArrT(const StackArrT& rhs) {
     size_ = rhs.size_;
     i_top_ = rhs.i_top_;
-    data_ = std::make_unique<Complex[]>(size_);
+    data_ = std::make_unique<T[]>(size_);
     std::copy(rhs.data_.get(), rhs.data_.get() + rhs.size_, data_.get());
 }
 
@@ -47,7 +47,7 @@ template<class T>
 StackArrT<T>& StackArrT<T>::operator=(const StackArrT<T>& rhs) noexcept {
     if (this != &rhs) {
         if (rhs.size_ > size_) {
-            data_ = std::make_unique<Complex[]>(rhs.size_);
+            data_ = std::make_unique<T[]>(rhs.size_);
         }
         std::copy(rhs.data_.get(), rhs.data_.get() + rhs.size_, data_.get());
         i_top_ = rhs.i_top_;
@@ -85,7 +85,7 @@ void StackArrT<T>::Clear() noexcept {
 template<class T>
 T& StackArrT<T>::Top() {
     if (i_top_ < 0) {
-        throw std::logic_error("StackArr - try get top form empty stack.");
+        throw std::logic_error("StackArrT - try get top form empty stack.");
     }
     return data_[i_top_];
 }
@@ -93,7 +93,7 @@ T& StackArrT<T>::Top() {
 template<class T>
 const T& StackArrT<T>::Top() const {
     if (i_top_ < 0) {
-        throw std::logic_error("StackArr - try get top form empty stack.");
+        throw std::logic_error("StackArrT - try get top form empty stack.");
     }
     return data_[i_top_];
 }
@@ -102,10 +102,10 @@ template<class T>
 void StackArrT<T>::Push(const T& el) {
     if (i_top_ == -1) {
         size_ = 8;
-        data_ = std::make_unique<Complex[]>(size_);
+        data_ = std::make_unique<T[]>(size_);
     }
     else if (size_ == i_top_ + 1) {
-        std::unique_ptr<Complex[]> new_data = std::make_unique<Complex[]>(size_ * 2);
+        std::unique_ptr<T[]> new_data = std::make_unique<T[]>(size_ * 2);
         std::copy(data_.get(), data_.get() + size_, new_data.get());
         std::swap(data_, new_data);
         size_ *= 2;
