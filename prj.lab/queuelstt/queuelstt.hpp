@@ -105,7 +105,7 @@ QueueLstT<T>& QueueLstT<T>::operator=(const QueueLstT& rhs) {
     if (this != &rhs) {
         Node* vs = rhs.head_;
         Node* tvs = head_;
-        Node* pr;
+        Node* pr = nullptr;
         while (vs != nullptr) {
             if (tvs != nullptr) {
                 tvs->v = vs->v;
@@ -132,8 +132,7 @@ QueueLstT<T>& QueueLstT<T>::operator=(const QueueLstT& rhs) {
             delete delete_future;
         }
         tail_ = pr;
-        tail_->next = nullptr;
+        if (tail_ != nullptr)tail_->next = nullptr;
     }
     return *this;
 }
-
