@@ -110,22 +110,10 @@ bool operator>(const Rational& r1, const Rational& r2) noexcept {
     }
 }
 
-bool operator>=(const Rational& r1, const Rational& r2) noexcept {
+bool operator<(const Rational& r1, const Rational& r2) noexcept {
     std::int64_t ch1 = r1.num() * r2.den();
     std::int64_t ch2 = r2.num() * r1.den();
-    if (ch1 >= ch2) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-
-bool operator<=(const Rational& r1, const Rational& r2) noexcept {
-    std::int64_t ch1 = r1.num() * r2.den();
-    std::int64_t ch2 = r2.num() * r1.den();
-    if (ch1 <= ch2) {
+    if (ch1 < ch2) {
         return 1;
     }
     else {
