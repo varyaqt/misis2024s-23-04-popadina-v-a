@@ -35,8 +35,6 @@ Rational& Rational::round() noexcept {
     return *this;
 }
 
-
-
 Rational::Rational(const std::int64_t num, const std::int64_t den) {
     if (den == 0) {
         throw std::invalid_argument("Zero denominator in Rational ctor\n");
@@ -191,18 +189,21 @@ std::ostream& Rational::writeTo(std::ostream& ostrm) const
 std::istream& Rational::readFrom(std::istream& istrm)
 {
     char separator(0);
-    int64_t num(0);
-    int64_t den(0);
-    istrm >> num >> separator >> den;
-    if (istrm.good())
-    {
-        if ((Rational::separator == separator))
-        {
-            num_ = num;
-            den_ = den;
+    int num(0);
+    int den(1);
+    istrm >> num;
+    istrm.get(separator);
+    int trash = istrm.peek();
+    istrm >> den;
+    if (!istrm || trash > '9' || trash < '0') {
+        istrm.setstate(std::ios_base::failbit);
+        return istrm;
+    }
+    if (istrm.good() || istrm.eof()) {
+        if (Rational::separator == separator && den > 0) {
+            *this = Rational(num, den);
         }
-        else
-        {
+        else {
             istrm.setstate(std::ios_base::failbit);
         }
     }
