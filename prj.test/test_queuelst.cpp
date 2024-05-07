@@ -1,132 +1,54 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-
-#include "doctest.h"
 #include "queuelst/queuelst.hpp"
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
 
 TEST_CASE("queuelst ctor") {
-    Complex c1(2, 0);
-    Complex c2(3, 4);
-    Complex c3(5, 6);
-    Complex c4(7, 8);
+    Complex c1 = { 1, 0 };
+    Complex c2 = { 2, 0 };
+    Complex c3 = { 3, 0 };
+    QueueLst q1;
+    REQUIRE(q1.IsEmpty() == true);
 
-    QueueLst queue;
-    QueueLst queue4;
+    q1.Push(c1);
+    REQUIRE(q1.IsEmpty() == false);
+    REQUIRE(q1.Top() == c1);
 
-    queue4.Push(c4);
-    CHECK_EQ(0, queue4.IsEmpty());
-    CHECK_EQ(c4, queue4.Top());
+    q1.Push(c2);
+    q1.Push(c3);
+    REQUIRE(q1.IsEmpty() == false);
+    REQUIRE(q1.Top() == c1);
 
-    CHECK_EQ(1, queue.IsEmpty());
-    queue.Pop();
-    CHECK_EQ(1, queue.IsEmpty());
+    QueueLst q2;
+    q2.Push(c1);
+    q2.Pop();
+    REQUIRE(q2.IsEmpty() == true);
+    q2.Push(c1);
+    q2.Push(c2);
+    q2.Push(c3);
+    q2.Pop();
+    q2.Pop();
+    REQUIRE(q2.IsEmpty() == false);
+    REQUIRE(q2.Top() == c3);
 
-    queue.Push(c1);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
+    QueueLst q3;
+    q3.Push(c1);
+    q3.Push(c2);
+    q3.Push(c3);
+    q3.Clear();
+    REQUIRE(q3.IsEmpty() == true);
 
-    queue.Push(c2);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
+    QueueLst q4(q1);
+    REQUIRE(q4.IsEmpty() == false);
+    REQUIRE(q4.Top() == c1);
+    q4.Pop();
+    REQUIRE(q4.Top() == c2);
+    REQUIRE(q1.Top() == c1);
 
-    queue.Push(c3);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
-
-    queue.Push(c4);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
-
-    QueueLst copu_queue_1(queue);
-    QueueLst queue2 = queue;
-
-    queue.Pop();
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c2, queue.Top());
-
-    queue.Pop();
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c3, queue.Top());
-
-    queue.Pop();
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c4, queue.Top());
-
-    queue.Pop();
-    CHECK_EQ(1, queue.IsEmpty());
-
-    queue.Push(c1);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
-
-    queue.Push(c2);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
-
-    queue.Clear();
-    CHECK_EQ(1, queue.IsEmpty());
-
-    QueueLst copu_queue_2(queue);
-    QueueLst queue3 = queue;
-
-    queue.Push(c1);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
-
-    queue.Push(c2);
-    CHECK_EQ(0, queue.IsEmpty());
-    CHECK_EQ(c1, queue.Top());
-
-    CHECK_EQ(1, queue3.IsEmpty());
-    queue3.Pop();
-    CHECK_EQ(1, queue3.IsEmpty());
-
-    queue3.Push(c1);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Push(c2);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Push(c3);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Push(c4);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Pop();
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c2, queue3.Top());
-
-    queue3.Pop();
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c3, queue3.Top());
-
-    queue3.Pop();
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c4, queue3.Top());
-
-    queue3.Pop();
-    CHECK_EQ(1, queue3.IsEmpty());
-
-    queue3.Push(c1);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Push(c2);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Clear();
-    CHECK_EQ(1, queue3.IsEmpty());
-
-    queue3.Push(c1);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
-
-    queue3.Push(c2);
-    CHECK_EQ(0, queue3.IsEmpty());
-    CHECK_EQ(c1, queue3.Top());
+    QueueLst q5;
+    q5 = q1;
+    REQUIRE(q5.IsEmpty() == false);
+    REQUIRE(q5.Top() == c1);
+    q5.Pop();
+    REQUIRE(q5.Top() == c2);
+    REQUIRE(q1.Top() == c1);
 }
