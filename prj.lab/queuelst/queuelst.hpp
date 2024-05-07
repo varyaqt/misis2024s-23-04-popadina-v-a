@@ -2,24 +2,27 @@
 #ifndef QUEUELST_HPP
 #define QUEUELST_HPP
 
-#include "complex/complex.hpp"
-
+#include <iostream>
+#include <algorithm>
 #include <cstddef>
+#include "complex/complex.hpp"
 
 class QueueLst {
 public:
-    QueueLst() = default;
-    QueueLst(const QueueLst& obj) = default;
-    QueueLst(QueueLst&& obj) noexcept;
-    QueueLst& operator=(QueueLst&& rhs) noexcept;
-    ~QueueLst() = default;
-    [[nodiscard]] QueueLst& operator=(const QueueLst&);
-    [[nodiscard]] bool IsEmpty() const noexcept;
+    [[nodiscard]] QueueLst() = default;
+    [[nodiscard]] QueueLst(const QueueLst& rhs);
+    [[nodiscard]] QueueLst(QueueLst&& rhs) noexcept;
+    ~QueueLst();
+    [[nodiscard]] QueueLst& operator=(const QueueLst& rhs);
+    [[nodiscard]] QueueLst& operator=(QueueLst&& rhs) noexcept;
+
+    void Push(const Complex& c);
     void Pop() noexcept;
-    void Push(const Complex& val);
+    bool IsEmpty() const noexcept;
     [[nodiscard]] Complex& Top();
     [[nodiscard]] const Complex& Top() const;
     void Clear() noexcept;
+
 private:
     struct Node {
         Complex v;
@@ -27,7 +30,7 @@ private:
         Node(const Complex& val) : v(val) {}
         ~Node() = default;
     };
-    Node* head_ = nullptr;   //!< 
-    Node* tail_ = nullptr;   //!< 
+    Node* head_ = nullptr;
+    Node* tail_ = nullptr;
 };
 #endif
