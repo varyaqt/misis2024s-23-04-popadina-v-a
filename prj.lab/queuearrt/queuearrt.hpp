@@ -32,8 +32,6 @@ private:
     std::unique_ptr<T[]> data_ = std::make_unique<T[]>(capacity_);
 };
 
-#endif
-
 template<class T>
 QueueArrT<T>::QueueArrT(const QueueArrT& rhs) {
     if (rhs.head_ != -1) {
@@ -163,3 +161,5 @@ template<class T>
 void QueueArrT<T>::Clear() noexcept {
     head_ = -1;
 }
+
+#endif
