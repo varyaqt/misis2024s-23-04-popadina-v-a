@@ -7,58 +7,56 @@
 
 int main() {
     cv::Mat img;
-    img = cv::imread("C:/Users/popad/Desktop/tests/panda.jpg", cv::IMREAD_COLOR);
+    img = cv::imread("C:/Users/popad/Desktop/tests/darsie.jpg", cv::IMREAD_COLOR);
     if (!img.data) {
-        std::cerr << "Error: the image wasn't correctly loaded." << std::endl;
+        std::cerr << "Error: the img wasn't correctly loaded." << std::endl;
         return -1;
     }
-    int64_t userSize = 0;
+    int userSize = 0;
     std::cout << "What is the size of the longest side?\n";
     std::cin >> userSize;
     while (userSize <= 0) {
-        std::cout << "The impossible size of the circuit.the size must be positive.\n";
+        std::cout << "The impossible size of the circuit. The size must be positive.\n";
         std::cout << "What is the size of the longest side?\n";
         std::cin >> userSize;
     }
-    cv::Mat mosaic = img.clone();
-    int a = img.rows;
-    int b = img.cols;
-    int p = 0;
-    if (a > b) {
-        if (a % userSize == 0) p = a / userSize;
-        else p = static_cast<int>(a / userSize) + 1;
-    }
-    else {
-        if (b % userSize == 0) p = b / userSize;
-        else p = static_cast<int>(b / userSize) + 1;
-    }
-    if (img.rows % p != 0) {
-        a = (std::trunc(img.rows / p) + 1) * p;
-    }
-    if (img.cols % p != 0) {
-        b = (std::trunc(img.cols / p) + 1) * p;
-    }
-    cv::Mat img2;
-    cv::resize(img, img2, cv::Size(a, b));
-    for (int y = 0; y < img2.rows; y += p) {
-        for (int x = 0; x < img2.cols; x += p) {
-            cv::Rect region(x, y, p, p);
-            int Pixels = p * p;
-            int B = 0, G = 0, R = 0;
-            for (int j = y; j < y + p; j++) {
-                for (int i = x; i < x + p; i++) {
-                    cv::Vec3b pixel = img2.at<cv::Vec3b>(j, i);
-                    B += pixel[0];
-                    G += pixel[1];
-                    R += pixel[2];
-                }
-            }
-            cv::Scalar meanColor = cv::Scalar(B / Pixels, G / Pixels, R / Pixels);
-            cv::rectangle(mosaic, region, meanColor, cv::FILLED);
+    // Получение размеров изображения
+    int width = img.cols;
+    int height = img.rows;
+    // Вычислить размер квадрата
+    int square_size = std::min(width / userSize, height / userSize);
+
+    // Вычислить количество квадратов по ширине и высоте
+    int userSize_width = std::ceil(static_cast<double>(width) / square_size);
+    int userSize_height = std::ceil(static_cast<double>(height) / square_size);
+
+    // Создать пустое мозаичное изображение
+    cv::Mat mosaic(userSize_height * square_size, userSize_width * square_size, CV_8UC3, cv::Scalar(0, 0, 0));
+
+    // Итерировать по квадратам
+    for (int i = 0; i < height; i += square_size) {
+        for (int j = 0; j < width; j += square_size) {
+            // Выделить квадрат
+            cv::Mat square = img(cv::Rect(j, i, std::min(square_size, width - j), std::min(square_size, height - i)));
+
+            // Вычислить средний цвет квадрата
+            cv::Scalar avg_color = mean(square);
+
+            // Заполнить квадрат в мозаичном изображении средним цветом
+            rectangle(mosaic, cv::Rect(j / square_size * square_size, i / square_size * square_size, square.cols, square.rows), avg_color, -1);
         }
     }
-    cv::imshow("output.jpg", mosaic);
-    cv::imwrite("C:/Users/popad/Desktop/tests/result.jpg", mosaic);
-    cv::waitKey();
+    imshow("Мозаичное изображение", mosaic);
+    imwrite("C:/Users/popad/Desktop/tests/result.jpg", mosaic);
+    cv::waitKey(0);
     return 0;
+
+    /*std::cout << "What is the number of colors in the palette?\n";
+    int nColors = 0;
+    std::cin >> nColors;
+    while (nColors <= 0) {
+        std::cout << "The impossible number of colors. The number must be positive.\n";
+        std::cout << "What is the number of colors in the palette?\n";
+        std::cin >> nColors;
+    }*/
 }
