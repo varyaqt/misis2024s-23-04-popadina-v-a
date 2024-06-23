@@ -1,4 +1,9 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(prj.cw)
+
 find_package(OpenCV CONFIG REQUIRED)
 
-add_executable(back back.cpp)
-target_link_libraries(opencv_001 PRIVATE opencv_core opencv_imgproc opencv_highgui)
+add_executable(prj.cw back.cpp)
+
+target_link_libraries(prj.cw PRIVATE OpenCV)
